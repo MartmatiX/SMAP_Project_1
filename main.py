@@ -16,7 +16,7 @@ def show_message(msg, title, face_landmarks_text):
 
 if __name__ == '__main__':
     # Define image path
-    img = "img_2.png"
+    img = "img_3.png"
 
     # Upload the image into the context
     image = face_recognition.load_image_file(img)
@@ -27,6 +27,54 @@ if __name__ == '__main__':
 
     # Show the original image
     pil_image.show()
+
+    # Definition of known faces
+    zelensky_image = face_recognition.load_image_file("known_faces/img.png")
+    zelensky_face_encoding = face_recognition.face_encodings(zelensky_image)[0]
+
+    pavel_image = face_recognition.load_image_file("known_faces/img_1.png")
+    pavel_face_encoding = face_recognition.face_encodings(pavel_image)[0]
+
+    obama_image = face_recognition.load_image_file("known_faces/img_2.png")
+    obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
+
+    # Definition of known encodings
+    known_face_encodings = [
+        zelensky_face_encoding,
+        pavel_face_encoding,
+        obama_face_encoding
+    ]
+
+    # Definition of known names
+    known_face_names = [
+        "Volodymyr Zelenskyj",
+        "Petr Pavel",
+        "Barack Obama"
+    ]
+
+    # Encode the image, so it can be used in the compare_faces method
+    unknown_face_encodings = face_recognition.face_encodings(image)
+
+    name = ""
+    # Check if any faces were found
+    if unknown_face_encodings:
+        for unknown_encoding in unknown_face_encodings:
+            matches = face_recognition.compare_faces(known_face_encodings, unknown_encoding)
+
+            # Ensure there are known faces before calculating distances
+            if known_face_encodings:
+                face_distances = face_recognition.face_distance(known_face_encodings, unknown_encoding)
+                if len(face_distances) > 0:
+                    best_match_index = face_distances.argmin()
+
+                    if best_match_index < len(matches) and matches[best_match_index]:
+                        name = known_face_names[best_match_index]
+                    else:
+                        name = "Unknown"
+                else:
+                    name = "Unknown"
+            else:
+                name = "Unknown"
 
     if not face_landmarks_list:
         easygui.msgbox("No face landmarks detected!", title="Face Land Marks")
@@ -93,10 +141,11 @@ if __name__ == '__main__':
                 "dominant_gender": feature['dominant_gender'],
                 "dominant_race": feature['dominant_race'],
                 "dominant_emotion": feature['dominant_emotion'],
-                "estimated_age": feature['age']
+                "estimated_age": feature['age'],
+                "name": name
             })
 
-            # Convert to JSON format for better readability
+        # Convert to JSON format for better readability
         json_data = json.dumps({"Detected People": dominant_data}, indent=4)
 
         # Dispatch separate thread and show the message

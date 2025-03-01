@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="37804dfd-93e3-434c-a90a-107a0683d95a" name="Changes" comment="Dominant features">
-      <change afterPath="$PROJECT_DIR$/img_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img_2.png" afterDir="false" />
+    <list default="true" id="37804dfd-93e3-434c-a90a-107a0683d95a" name="Changes" comment="Recognition of multiple people">
+      <change afterPath="$PROJECT_DIR$/img_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img_4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/known_faces/img.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/known_faces/img_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/known_faces/img_2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
