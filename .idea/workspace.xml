@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="37804dfd-93e3-434c-a90a-107a0683d95a" name="Changes" comment="Facial recognition features">
+    <list default="true" id="37804dfd-93e3-434c-a90a-107a0683d95a" name="Changes" comment="Dominant features">
+      <change afterPath="$PROJECT_DIR$/img_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img_2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -90,7 +92,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740829196874</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Dominant features">
+      <option name="closed" value="true" />
+      <created>1740830057756</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1740830057756</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -107,6 +117,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Push after setup" />
     <MESSAGE value="Facial recognition features" />
-    <option name="LAST_COMMIT_MESSAGE" value="Facial recognition features" />
+    <MESSAGE value="Dominant features" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dominant features" />
   </component>
 </project>

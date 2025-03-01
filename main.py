@@ -16,7 +16,7 @@ def show_message(msg, title, face_landmarks_text):
 
 if __name__ == '__main__':
     # Define image path
-    img = "img.png"
+    img = "img_2.png"
 
     # Upload the image into the context
     image = face_recognition.load_image_file(img)
@@ -49,23 +49,23 @@ if __name__ == '__main__':
         for face_landmark in face_landmarks_list:
             d = ImageDraw.Draw(pil_image, 'RGBA')
             if 'chin' in face_landmark:
-                d.line(face_landmark['chin'], fill=(255, 255, 255, 255), width=3)
+                d.line(face_landmark['chin'], fill=(255, 255, 255, 255), width=1)
             if 'left_eyebrow' in face_landmark:
-                d.polygon(face_landmark['left_eyebrow'], outline=(255, 255, 255, 255), width=3)
+                d.polygon(face_landmark['left_eyebrow'], outline=(255, 255, 255, 255), width=1)
             if 'right_eyebrow' in face_landmark:
-                d.polygon(face_landmark['right_eyebrow'], outline=(255, 255, 255, 255), width=3)
+                d.polygon(face_landmark['right_eyebrow'], outline=(255, 255, 255, 255), width=1)
             if 'nose_bridge' in face_landmark:
-                d.line(face_landmark['nose_bridge'], fill=(255, 255, 255, 255), width=3)
+                d.line(face_landmark['nose_bridge'], fill=(255, 255, 255, 255), width=1)
             if 'nose_tip' in face_landmark:
-                d.line(face_landmark['nose_tip'], fill=(255, 255, 255, 255), width=3)
+                d.line(face_landmark['nose_tip'], fill=(255, 255, 255, 255), width=1)
             if 'nose_bridge' in face_landmark:
-                d.polygon(face_landmark['left_eye'], outline=(255, 255, 255, 255), width=3)
+                d.polygon(face_landmark['left_eye'], outline=(255, 255, 255, 255), width=1)
             if 'right_eye' in face_landmark:
-                d.polygon(face_landmark['right_eye'], outline=(255, 255, 255, 255), width=3)
+                d.polygon(face_landmark['right_eye'], outline=(255, 255, 255, 255), width=1)
             if 'top_lip' in face_landmark:
-                d.polygon(face_landmark['top_lip'], outline=(255, 255, 255, 255), width=3)
+                d.polygon(face_landmark['top_lip'], outline=(255, 255, 255, 255), width=1)
             if 'bottom_lip' in face_landmark:
-                d.polygon(face_landmark['bottom_lip'], outline=(255, 255, 255, 255), width=3)
+                d.polygon(face_landmark['bottom_lip'], outline=(255, 255, 255, 255), width=1)
         # Show the image with the highlighted face landmarks
         pil_image.show()
 
@@ -75,82 +75,59 @@ if __name__ == '__main__':
             actions=['age', 'gender', 'race', 'emotion'],
         )
 
-        # Define variables to prevent 'undefined' errors
-        age = ""
-        gender_data = ""
-        race_data = ""
-        emotion_data = ""
+        # Lists to store data for multiple faces
+        all_ages = []
+        all_genders = []
+        all_races = []
+        all_emotions = []
+        dominant_data = []
 
-        dominant_gender = ""
-        dominant_race = ""
-        dominant_emotion = ""
+        for i, feature in enumerate(features):
+            all_ages.append(feature['age'])
+            all_genders.append(feature['gender'])
+            all_races.append(feature['race'])
+            all_emotions.append(feature['emotion'])
 
-        # Pick out respective values
-        for feature in features:
-            age = feature['age']
-            gender_data = feature['gender']
-            race_data = feature['race']
-            emotion_data = feature['emotion']
+            dominant_data.append({
+                "Person": i + 1,
+                "dominant_gender": feature['dominant_gender'],
+                "dominant_race": feature['dominant_race'],
+                "dominant_emotion": feature['dominant_emotion'],
+                "estimated_age": feature['age']
+            })
 
-            dominant_gender = feature['dominant_gender']
-            dominant_race = feature['dominant_race']
-            dominant_emotion = feature['dominant_emotion']
-
-        # Prepare dictionary for dominant output
-        dominant_data = {
-            "Dominant Data": {
-                "dominant_gender": dominant_gender,
-                "dominant_race": dominant_race,
-                "dominant_emotion": dominant_emotion,
-                "estimated_age": age
-            }
-        }
-
-        # Convert to nicer JSON output
-        json_data = json.dumps(dominant_data, indent=4)
+            # Convert to JSON format for better readability
+        json_data = json.dumps({"Detected People": dominant_data}, indent=4)
 
         # Dispatch separate thread and show the message
         thread2 = threading.Thread(target=show_message,
-                                   args=("Dominant Data", "JSON output of Dominant Data", json_data,))
+                                   args=("Detected People", "JSON output of detected people", json_data,))
         thread2.start()
 
-        # Creating subplots (2 rows, 2 columns)
-        fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+        # Plotting the data
+        num_people = len(features)
+        fig, axes = plt.subplots(4, num_people, figsize=(4 * num_people, 16))
+        if num_people == 1:
+            axes = [[ax] for ax in axes]  # Ensure indexing works for a single person
 
-        # Gender chart
-        axes[0, 0].bar(gender_data.keys(), gender_data.values(), color=['blue', 'green'])
-        axes[0, 0].set_xlabel('Gender')
-        axes[0, 0].set_ylabel('Probability (%)')
-        axes[0, 0].set_title('Gender Distribution')
-        axes[0, 0].set_ylim(0, 100)
+        for i in range(num_people):
+            # Gender chart
+            axes[0][i].bar(all_genders[i].keys(), all_genders[i].values(), color=['blue', 'green'])
+            axes[0][i].set_title(f'Gender - Person {i + 1}')
 
-        # Race chart
-        axes[0, 1].bar(race_data.keys(), race_data.values(),
-                       color=['red', 'orange', 'yellow', 'green', 'blue', 'purple'])
-        axes[0, 1].set_xlabel('Race')
-        axes[0, 1].set_ylabel('Probability (%)')
-        axes[0, 1].set_title('Race Distribution')
-        axes[0, 1].set_ylim(0, 100)
-        axes[0, 1].tick_params(axis='x', rotation=45)
+            # Race chart
+            axes[1][i].bar(all_races[i].keys(), all_races[i].values(),
+                           color=['red', 'orange', 'yellow', 'green', 'blue', 'purple'])
+            axes[1][i].set_title(f'Race - Person {i + 1}')
 
-        # Emotion chart
-        axes[1, 0].bar(emotion_data.keys(), emotion_data.values(),
-                       color=['pink', 'brown', 'cyan', 'lime', 'gray', 'magenta', 'black'])
-        axes[1, 0].set_xlabel('Emotion')
-        axes[1, 0].set_ylabel('Probability (%)')
-        axes[1, 0].set_title('Emotion Distribution')
-        axes[1, 0].set_ylim(0, 100)
-        axes[1, 0].tick_params(axis='x', rotation=45)
+            # Emotion chart
+            axes[2][i].bar(all_emotions[i].keys(), all_emotions[i].values(),
+                           color=['pink', 'brown', 'cyan', 'lime', 'gray', 'magenta', 'black'])
+            axes[2][i].set_title(f'Emotion - Person {i + 1}')
 
-        # Age chart (single bar)
-        axes[1, 1].bar(["Age"], [age], color='purple')
-        axes[1, 1].set_xlabel('Feature')
-        axes[1, 1].set_ylabel('Years')
-        axes[1, 1].set_title('Estimated Age')
-        axes[1, 1].set_ylim(0, 100)
+            # Age chart
+            axes[3][i].bar(["Age"], [all_ages[i]], color='purple')
+            axes[3][i].set_title(f'Estimated Age - Person {i + 1}')
 
-        # Adjust layout for better spacing
         plt.tight_layout()
-
-        # Show the charts
         plt.show()
