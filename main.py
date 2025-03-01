@@ -1,3 +1,5 @@
+import json
+
 from PIL import Image, ImageDraw
 from deepface import DeepFace
 
@@ -73,10 +75,15 @@ if __name__ == '__main__':
             actions=['age', 'gender', 'race', 'emotion'],
         )
 
+        # Define variables to prevent 'undefined' errors
         age = ""
         gender_data = ""
         race_data = ""
         emotion_data = ""
+
+        dominant_gender = ""
+        dominant_race = ""
+        dominant_emotion = ""
 
         # Pick out respective values
         for feature in features:
@@ -84,6 +91,28 @@ if __name__ == '__main__':
             gender_data = feature['gender']
             race_data = feature['race']
             emotion_data = feature['emotion']
+
+            dominant_gender = feature['dominant_gender']
+            dominant_race = feature['dominant_race']
+            dominant_emotion = feature['dominant_emotion']
+
+        # Prepare dictionary for dominant output
+        dominant_data = {
+            "Dominant Data": {
+                "dominant_gender": dominant_gender,
+                "dominant_race": dominant_race,
+                "dominant_emotion": dominant_emotion,
+                "estimated_age": age
+            }
+        }
+
+        # Convert to nicer JSON output
+        json_data = json.dumps(dominant_data, indent=4)
+
+        # Dispatch separate thread and show the message
+        thread2 = threading.Thread(target=show_message,
+                                   args=("Dominant Data", "JSON output of Dominant Data", json_data,))
+        thread2.start()
 
         # Creating subplots (2 rows, 2 columns)
         fig, axes = plt.subplots(2, 2, figsize=(12, 10))
