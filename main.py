@@ -16,7 +16,7 @@ def show_message(msg, title, face_landmarks_text):
 
 if __name__ == '__main__':
     # Define image path
-    img = "img_3.png"
+    img = "img.png"
 
     # Upload the image into the context
     image = face_recognition.load_image_file(img)

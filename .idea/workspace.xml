@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="37804dfd-93e3-434c-a90a-107a0683d95a" name="Changes" comment="Recognition of multiple people">
-      <change afterPath="$PROJECT_DIR$/img_3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img_4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/known_faces/img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/known_faces/img_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/known_faces/img_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="37804dfd-93e3-434c-a90a-107a0683d95a" name="Changes" comment="Recognition of faces from dataset">
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -103,7 +97,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740830057756</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Recognition of faces from dataset">
+      <option name="closed" value="true" />
+      <created>1740844002475</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1740844002475</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -121,6 +123,7 @@
     <MESSAGE value="Push after setup" />
     <MESSAGE value="Facial recognition features" />
     <MESSAGE value="Dominant features" />
-    <option name="LAST_COMMIT_MESSAGE" value="Dominant features" />
+    <MESSAGE value="Recognition of faces from dataset" />
+    <option name="LAST_COMMIT_MESSAGE" value="Recognition of faces from dataset" />
   </component>
 </project>
